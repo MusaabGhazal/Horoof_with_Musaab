@@ -20,7 +20,7 @@ export default function Hexagon({ letter }: { letter: string }) {
     <div className="w-33 h-38 bg-black clip-hexagon flex items-center justify-center">
       <div
         onClick={onClick}
-        className={`border text-7xl w-32 h-36 ${hexagonColor} clip-hexagon flex items-center justify-center font-semibold`}
+        className={`border text-7xl w-32 h-36 hover:brightness-90 ${hexagonColor} clip-hexagon flex items-center justify-center font-semibold`}
       >
         {letter}
       </div>
