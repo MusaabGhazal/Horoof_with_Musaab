@@ -24,6 +24,10 @@ function App() {
   const [letters, setLetters] = useState(() =>
     generateLetters(arabicLetters)
   );
+  const total = 25;
+  const [colors, setColors] = useState<string[]>(() =>
+    Array.from({ length: total }, () => "bg-white")
+  );
 
   const switchLanguage = (lang : string) => {
     if (lang === selected) return;
@@ -32,6 +36,7 @@ function App() {
     setLetters(
       generateLetters(lang === "ar" ? arabicLetters : englishLetters)
     );
+    setColors(Array.from({ length: total }, () => "bg-white"));
   };
 
   const rows = [
@@ -45,14 +50,14 @@ function App() {
   return (
     <>
       {/* Language Switcher */}
-      <div className="flex justify-center -mt-20">
-        <div className="flex flex-row-reverse border border-gray-400 overflow-hidden rounded-xl shadow-sm bg-white">
+      <div className={`flex justify-center -mt-20 ${selected === "ar" ? "flex-row-reverse" : "flex-row"} gap-4`}>
+        <div className="flex flex-row-reverse border border-gray-400 overflow-hidden rounded-xl shadow-sm bg-white!">
           <button
             onClick={() => switchLanguage("ar")}
             className={`px-6 py-2 font-extrabold! transition-all duration-200 hover:brightness-90 ${
               selected === "ar"
-                ? "bg-emerald-800! text-white"
-                : "bg-white! text-emerald-900"
+                ? "bg-emerald-800! text-white!"
+                : "bg-white! text-emerald-900!"
             }`}
           >
             عربي
@@ -62,13 +67,19 @@ function App() {
             onClick={() => switchLanguage("en")}
             className={`px-6 py-2 font-extrabold! transition-all duration-200 hover:brightness-90 ${
               selected === "en"
-                ? "bg-amber-800! text-white"
-                : "bg-white! text-amber-900"
+                ? "bg-amber-800! text-white!"
+                : "bg-white! text-amber-900!"
             }`}
           >
             English
           </button>
         </div>
+        <button
+          onClick={() => setColors(Array.from({ length: total }, () => "bg-white"))}
+          className="px-4 py-2 rounded bg-red-200! text-red-900! hover:brightness-90"
+        >
+          {selected === "ar" ? "إعادة اللعبة" : "Reset Game"}
+        </button>
       </div>
 
       {/* Hex Grid */}
@@ -78,9 +89,23 @@ function App() {
             key={rowIndex}
             className={`hex-row ${rowIndex % 2 === 1 ? "offset" : ""}`}
           >
-            {row.map((letter, i) => (
-              <Hexagon key={i} letter={letter} />
-            ))}
+            {row.map((letter, i) => {
+              const index = rowIndex * 5 + i;
+              return (
+                <Hexagon
+                  key={index}
+                  letter={letter}
+                  color={colors[index]}
+                  setColor={(c) =>
+                    setColors((prev) => {
+                      const copy = [...prev];
+                      copy[index] = c;
+                      return copy;
+                    })
+                  }
+                />
+              );
+            })}
           </div>
         ))}
       </div>
