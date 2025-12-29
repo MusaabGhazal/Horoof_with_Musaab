@@ -95,3 +95,27 @@ button:focus-visible {
 .hex-row.offset {
   margin-left: 130px;
 }
+
+.triangle-left {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  clip-path: polygon(
+    0 -35%,      
+    0 135%,  
+    50% 50%    
+  );
+  pointer-events: none; 
+}
+
+.triangle-right {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  clip-path: polygon(
+    100% -35%,      
+    100% 135%,  
+    50% 50%    
+  );
+  pointer-events: none; 
+}

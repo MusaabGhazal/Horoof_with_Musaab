@@ -1,6 +1,6 @@
-import "./App.css";
 import Hexagon from "./components/Hexagon";
 import { useState } from "react";
+import Triangle from "./components/Triangle";
 
 function App() {
   const arabicLetters = [
@@ -26,7 +26,7 @@ function App() {
   );
   const total = 25;
   const [colors, setColors] = useState<string[]>(() =>
-    Array.from({ length: total }, () => "bg-white")
+    Array.from({ length: total }, () => "#FFFFFF")
   );
 
   const switchLanguage = (lang : string) => {
@@ -36,7 +36,7 @@ function App() {
     setLetters(
       generateLetters(lang === "ar" ? arabicLetters : englishLetters)
     );
-    setColors(Array.from({ length: total }, () => "bg-white"));
+    setColors(Array.from({ length: total }, () => "#FFFFFF"));
   };
 
   const rows = [
@@ -47,10 +47,13 @@ function App() {
     letters.slice(20, 25),
   ];
 
+  const [colorOne, setColorOne] = useState("#A7E1B8");
+  const [colorTwo, setColorTwo] = useState("#16A34A");
+
   return (
-    <>
+    <div className="w-screen h-screen flex flex-col justify-center" style={{ backgroundColor: colorOne }}>
       {/* Language Switcher */}
-      <div className={`flex justify-center -mt-20 ${selected === "ar" ? "flex-row-reverse" : "flex-row"} gap-4`}>
+      <div className={`flex justify-center -mt-20 ${selected === "ar" ? "flex-row-reverse" : "flex-row"} gap-4 z-10`}>
         <div className="flex flex-row-reverse border border-gray-400 overflow-hidden rounded-xl shadow-sm bg-white!">
           <button
             onClick={() => switchLanguage("ar")}
@@ -75,7 +78,7 @@ function App() {
           </button>
         </div>
         <button
-          onClick={() => setColors(Array.from({ length: total }, () => "bg-white"))}
+          onClick={() => setColors(Array.from({ length: total }, () => "#FFFFFF"))}
           className="px-4 py-2 rounded bg-red-200! text-red-900! hover:brightness-90"
         >
           {selected === "ar" ? "إعادة اللعبة" : "Reset Game"}
@@ -83,7 +86,7 @@ function App() {
       </div>
 
       {/* Hex Grid */}
-      <div className="hex-grid">
+      <div className="hex-grid z-10">
         {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
@@ -96,6 +99,8 @@ function App() {
                   key={index}
                   letter={letter}
                   color={colors[index]}
+                  colorOne={colorOne}
+                  colorTwo={colorTwo}
                   setColor={(c) =>
                     setColors((prev) => {
                       const copy = [...prev];
@@ -108,8 +113,64 @@ function App() {
             })}
           </div>
         ))}
+        <div className="absolute top-[42%] left-20 bg-white/60 p-3 rounded shadow-md z-20">
+          <fieldset className="mb-3">
+            <legend className="text-sm font-semibold mb-2">Team One</legend>
+            <div className="flex gap-2">
+                {[
+                "#A7E1B8",
+                "#BEEBFF",
+                "#FFBFD0",
+                "#FFEBA0",
+                ].map((c) => (
+                <label key={c} className="flex items-center cursor-pointer">
+                  <input
+                  type="radio"
+                  name="bgColor"
+                  value={c}
+                  checked={colorOne === c}
+                  onChange={() => setColorOne(c)}
+                  className="sr-only"
+                  />
+                  <span
+                  className={`w-8 h-6 inline-block border ${
+                    colorOne === c ? "ring-2 ring-offset-1 ring-amber-400" : ""
+                  }`}
+                  style={{ backgroundColor: c }}
+                  />
+                </label>
+                ))}
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend className="text-sm font-semibold mb-2">Team Two</legend>
+            <div className="flex gap-2">
+              {["#16A34A", "#0369A1", "#BE185D", "#D97706"].map((c) => (
+                <label key={c} className="flex items-center cursor-pointer">
+                  <input
+                    type="radio"
+                    name="accentColor"
+                    value={c}
+                    checked={colorTwo === c}
+                    onChange={() => setColorTwo(c)}
+                    className="sr-only"
+                  />
+                  <span
+                    className={`w-8 h-6 inline-block border ${
+                      colorTwo === c ? "ring-2 ring-offset-1 ring-emerald-400" : ""
+                    }`}
+                    style={{ backgroundColor: c }}
+                  />
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        </div>
       </div>
-    </>
+      <Triangle className="triangle-left" color={colorTwo}/>
+      <Triangle className="triangle-right" color={colorTwo}/>
+    </div>
   );
 }
 
