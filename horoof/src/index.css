@@ -80,6 +80,11 @@ button:focus-visible {
   );
 }
 
+.clip-hexagon:hover {
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.25);
+  transform: scale(1.03);
+}
+
 .hex-grid {
   display: flex;
   flex-direction: column;
@@ -118,4 +123,8 @@ button:focus-visible {
     50% 50%    
   );
   pointer-events: none; 
+}
+
+.font-ar {
+  font-family: 'Baloo Bhaijaan 2', sans-serif;
 }

@@ -26,7 +26,7 @@ export default function Hexagon({
     <div className="w-33 h-38 bg-black clip-hexagon flex items-center justify-center">
       <div
         onClick={onClick}
-        className={`border text-7xl w-32 h-36 hover:brightness-90 clip-hexagon flex items-center justify-center font-semibold`}
+        className={`border text-black text-7xl w-32 h-36 hover:brightness-90 clip-hexagon flex items-center justify-center font-semibold font-ar `}
         style={{ backgroundColor: color }}
       >
         {letter}

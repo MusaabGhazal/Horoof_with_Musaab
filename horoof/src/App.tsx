@@ -4,38 +4,83 @@ import Triangle from "./components/Triangle";
 
 function App() {
   const arabicLetters = [
-    "أ","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز",
-    "س","ش","ص","ض","ط","ظ","ع","غ","ف","ق",
-    "ك","ل","م","ن","هـ","و","ي",
+    "أ",
+    "ب",
+    "ت",
+    "ث",
+    "ج",
+    "ح",
+    "خ",
+    "د",
+    "ذ",
+    "ر",
+    "ز",
+    "س",
+    "ش",
+    "ص",
+    "ض",
+    "ط",
+    "ظ",
+    "ع",
+    "غ",
+    "ف",
+    "ق",
+    "ك",
+    "ل",
+    "م",
+    "ن",
+    "هـ",
+    "و",
+    "ي",
   ];
 
   const englishLetters = [
-    "A","B","C","D","E","F","G","H","I","J",
-    "K","L","M","N","O","P","Q","R","S","T",
-    "U","V","W","X","Y","Z",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
   ];
 
   const generateLetters = (source: string[]) =>
-    Array.from({ length: 25 }, () =>
-      source[Math.floor(Math.random() * source.length)]
+    Array.from(
+      { length: 25 },
+      () => source[Math.floor(Math.random() * source.length)]
     );
 
   const [selected, setSelected] = useState("ar");
-  const [letters, setLetters] = useState(() =>
-    generateLetters(arabicLetters)
-  );
+  const [letters, setLetters] = useState(() => generateLetters(arabicLetters));
   const total = 25;
   const [colors, setColors] = useState<string[]>(() =>
     Array.from({ length: total }, () => "#FFFFFF")
   );
 
-  const switchLanguage = (lang : string) => {
+  const switchLanguage = (lang: string) => {
     if (lang === selected) return;
 
     setSelected(lang);
-    setLetters(
-      generateLetters(lang === "ar" ? arabicLetters : englishLetters)
-    );
+    setLetters(generateLetters(lang === "ar" ? arabicLetters : englishLetters));
     setColors(Array.from({ length: total }, () => "#FFFFFF"));
   };
 
@@ -47,13 +92,20 @@ function App() {
     letters.slice(20, 25),
   ];
 
-  const [colorOne, setColorOne] = useState("#A7E1B8");
-  const [colorTwo, setColorTwo] = useState("#16A34A");
+  const [colorOne, setColorOne] = useState("#6A4C93");
+  const [colorTwo, setColorTwo] = useState("#C9A227");
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center" style={{ backgroundColor: colorOne }}>
+    <div
+      className="w-screen h-screen flex flex-col justify-center"
+      style={{ backgroundColor: colorOne }}
+    >
       {/* Language Switcher */}
-      <div className={`flex justify-center -mt-20 ${selected === "ar" ? "flex-row-reverse" : "flex-row"} gap-4 z-10`}>
+      <div
+        className={`flex justify-center -mt-20 ${
+          selected === "ar" ? "flex-row-reverse" : "flex-row"
+        } gap-4 z-10`}
+      >
         <div className="flex flex-row-reverse border border-gray-400 overflow-hidden rounded-xl shadow-sm bg-white!">
           <button
             onClick={() => switchLanguage("ar")}
@@ -78,7 +130,9 @@ function App() {
           </button>
         </div>
         <button
-          onClick={() => setColors(Array.from({ length: total }, () => "#FFFFFF"))}
+          onClick={() =>
+            setColors(Array.from({ length: total }, () => "#FFFFFF"))
+          }
           className="px-4 py-2 rounded bg-red-200! text-red-900! hover:brightness-90"
         >
           {selected === "ar" ? "إعادة اللعبة" : "Reset Game"}
@@ -117,36 +171,33 @@ function App() {
           <fieldset className="mb-3">
             <legend className="text-sm font-semibold mb-2">Team One</legend>
             <div className="flex gap-2">
-                {[
-                "#A7E1B8",
-                "#BEEBFF",
-                "#FFBFD0",
-                "#FFEBA0",
-                ].map((c) => (
+              {["#6A4C93", "#E07A1F", "#1F2A44", "#1FB9B2"].map((c) => (
                 <label key={c} className="flex items-center cursor-pointer">
                   <input
-                  type="radio"
-                  name="bgColor"
-                  value={c}
-                  checked={colorOne === c}
-                  onChange={() => setColorOne(c)}
-                  className="sr-only"
+                    type="radio"
+                    name="bgColor"
+                    value={c}
+                    checked={colorOne === c}
+                    onChange={() => setColorOne(c)}
+                    className="sr-only"
                   />
                   <span
-                  className={`w-8 h-6 inline-block border ${
-                    colorOne === c ? "ring-2 ring-offset-1 ring-amber-400" : ""
-                  }`}
-                  style={{ backgroundColor: c }}
+                    className={`w-8 h-6 inline-block border ${
+                      colorOne === c
+                        ? "ring-2 ring-offset-1 ring-amber-400"
+                        : ""
+                    }`}
+                    style={{ backgroundColor: c }}
                   />
                 </label>
-                ))}
+              ))}
             </div>
           </fieldset>
 
           <fieldset>
             <legend className="text-sm font-semibold mb-2">Team Two</legend>
             <div className="flex gap-2">
-              {["#16A34A", "#0369A1", "#BE185D", "#D97706"].map((c) => (
+              {["#C9A227", "#2F9E63", "#C73A3A", "#2D6CDF"].map((c) => (
                 <label key={c} className="flex items-center cursor-pointer">
                   <input
                     type="radio"
@@ -158,7 +209,9 @@ function App() {
                   />
                   <span
                     className={`w-8 h-6 inline-block border ${
-                      colorTwo === c ? "ring-2 ring-offset-1 ring-emerald-400" : ""
+                      colorTwo === c
+                        ? "ring-2 ring-offset-1 ring-emerald-400"
+                        : ""
                     }`}
                     style={{ backgroundColor: c }}
                   />
@@ -168,8 +221,8 @@ function App() {
           </fieldset>
         </div>
       </div>
-      <Triangle className="triangle-left" color={colorTwo}/>
-      <Triangle className="triangle-right" color={colorTwo}/>
+      <Triangle className="triangle-left" color={colorTwo} />
+      <Triangle className="triangle-right" color={colorTwo} />
     </div>
   );
 }
